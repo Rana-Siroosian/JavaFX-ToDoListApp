@@ -10,11 +10,41 @@
 <?import java.time.LocalDate?>
 
 
-<BorderPane fx:controller="rana.todolist.Controller"
+
+<BorderPane fx:id="mainBorderPane" fx:controller="rana.todolist.Controller"
 	xmlns:fx="http://javafx.com/fxml">
+	<top>
+		<MenuBar>
+			<Menu text="File">
+				<items>
+					<MenuItem text="New..." onAction="#showNewItemdialog"/>
+					<SeparatorMenuItem />
+					<MenuItem text="Exit" />
+				</items>
+			</Menu>
+		</MenuBar>
+	</top>
 	<left>
-	<ListView fx:id="todoListView">
-	
-	</ListView>
+		<ListView fx:id="todoListView">
+
+		</ListView>
 	</left>
+	<center>
+		<VBox style="-fx-background-color: white">
+			<TextArea fx:id="itemDetailsTextArea" VBox.vgrow="ALWAYS" wrapText="true"/>
+			<HBox>
+				<Label text="Due: " style="-fx-background-color: white">
+					<font>
+						<Font name="Times New Roman bold" size="20"></Font>
+					</font>
+				</Label>
+				<Label fx:id="deadlineLabel"
+					style="-fx-background-color: white">
+					<font>
+						<Font name="Times New Roman bold" size="20"></Font>
+					</font>
+				</Label>
+			</HBox>
+		</VBox>
+	</center>
 </BorderPane>

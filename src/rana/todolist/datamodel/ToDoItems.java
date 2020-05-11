@@ -5,47 +5,47 @@ package rana.todolist.datamodel;
  */
 import java.time.LocalDate;
 
+
 public class ToDoItems {
 
-	private String shortDescription;
-	private String details;
-	private LocalDate deadLine;
-	
-	public ToDoItems(String shortDescription, String details, LocalDate deadLine) {
-		super();
-		this.shortDescription = shortDescription;
-		this.details = details;
-		this.deadLine = deadLine;
-	}
+    private String shortDescription;
+    private String details;
+    private LocalDate deadline;
 
-	public String getShortDescription() {
-		return shortDescription;
-	}
+    public ToDoItems(String shortDescription, String details, LocalDate deadline) {
+        this.shortDescription = shortDescription;
+        this.details = details;
+        this.deadline = deadline;
+    }
 
-	public void setShortDescription(String shortDescription) {
-		this.shortDescription = shortDescription;
-	}
+    public String getShortDescription() {
+        return shortDescription;
+    }
 
-	public String getDetails() {
-		return details;
-	}
+    public void setShortDescription(String shortDescription) {
+        this.shortDescription = shortDescription;
+    }
 
-	public void setDetails(String details) {
-		this.details = details;
-	}
+    public String getDetails() {
+        return details;
+    }
 
-	public LocalDate getDeadLine() {
-		return deadLine;
-	}
+    public void setDetails(String details) {
+        this.details = details;
+    }
 
-	public void setDeadLine(LocalDate deadLine) {
-		this.deadLine = deadLine;
-	}
+    public LocalDate getDeadline() {
+        return deadline;
+    }
 
-	@Override
-	public String toString() {
-		return shortDescription ;
-	}
-	
-	
+    public void setDeadline(LocalDate deadline) {
+        this.deadline = deadline;
+    }
+
+    @Override
+    public String toString() {
+        return shortDescription;
+    }
 }
+	
+
