@@ -5,6 +5,8 @@ package rana.todolist.datamodel;
  */
 import java.time.LocalDate;
 
+import javafx.scene.paint.Color;
+
 
 public class ToDoItems {
 
@@ -42,10 +44,11 @@ public class ToDoItems {
         this.deadline = deadline;
     }
 
-    @Override
-    public String toString() {
-        return shortDescription;
-    }
+//    @Override
+//    public String toString() {
+//        return shortDescription;
+//    }
+   
 }
 	
 
