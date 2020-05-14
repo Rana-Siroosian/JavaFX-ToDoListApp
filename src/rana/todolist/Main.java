@@ -1,4 +1,5 @@
 package rana.todolist;
+
 import java.io.IOException;
 
 /**
@@ -24,23 +25,23 @@ public class Main extends Application {
 	public static void main(String[] args) {
 		launch(args);
 	}
-	
+
 	@Override
-	public void stop() throws Exception{
+	public void stop() throws Exception {
 		try {
 			TodoData.getInstance().storeTodoItems();
-		}catch(IOException e) {
+		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		}
 	}
-	
+
 	@Override
-	public void init() throws Exception{
+	public void init() throws Exception {
 		try {
 			TodoData.getInstance().loadTodoItems();
-		}catch(IOException e) {
+		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		}
 	}
-	
+
 }

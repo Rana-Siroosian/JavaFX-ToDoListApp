@@ -1,4 +1,5 @@
 package rana.todolist.datamodel;
+
 /**
  * 
  * @author >>RanaSiroosian<<
@@ -7,48 +8,45 @@ import java.time.LocalDate;
 
 import javafx.scene.paint.Color;
 
-
 public class ToDoItems {
 
-    private String shortDescription;
-    private String details;
-    private LocalDate deadline;
+	private String shortDescription;
+	private String details;
+	private LocalDate deadline;
 
-    public ToDoItems(String shortDescription, String details, LocalDate deadline) {
-        this.shortDescription = shortDescription;
-        this.details = details;
-        this.deadline = deadline;
-    }
+	public ToDoItems(String shortDescription, String details, LocalDate deadline) {
+		this.shortDescription = shortDescription;
+		this.details = details;
+		this.deadline = deadline;
+	}
 
-    public String getShortDescription() {
-        return shortDescription;
-    }
+	public String getShortDescription() {
+		return shortDescription;
+	}
 
-    public void setShortDescription(String shortDescription) {
-        this.shortDescription = shortDescription;
-    }
+	public void setShortDescription(String shortDescription) {
+		this.shortDescription = shortDescription;
+	}
 
-    public String getDetails() {
-        return details;
-    }
+	public String getDetails() {
+		return details;
+	}
 
-    public void setDetails(String details) {
-        this.details = details;
-    }
+	public void setDetails(String details) {
+		this.details = details;
+	}
 
-    public LocalDate getDeadline() {
-        return deadline;
-    }
+	public LocalDate getDeadline() {
+		return deadline;
+	}
 
-    public void setDeadline(LocalDate deadline) {
-        this.deadline = deadline;
-    }
+	public void setDeadline(LocalDate deadline) {
+		this.deadline = deadline;
+	}
 
 //    @Override
 //    public String toString() {
 //        return shortDescription;
 //    }
-   
-}
-	
 
+}

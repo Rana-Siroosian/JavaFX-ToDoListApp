@@ -8,30 +8,54 @@
 <?import javafx.collections.*?>
 <?import java.lang.String?>
 <?import java.time.LocalDate?>
+<?import javafx.scene.image.*?>
 
 
 
-<BorderPane fx:id="mainBorderPane" fx:controller="rana.todolist.Controller"
+<BorderPane fx:id="mainBorderPane"
+	fx:controller="rana.todolist.Controller"
 	xmlns:fx="http://javafx.com/fxml">
 	<top>
-		<MenuBar>
-			<Menu text="File">
-				<items>
-					<MenuItem text="New..." onAction="#showNewItemdialog"/>
-					<SeparatorMenuItem />
-					<MenuItem text="Exit" />
-				</items>
-			</Menu>
-		</MenuBar>
+		<VBox>
+			<MenuBar>
+				<Menu text="File">
+					<items>
+						<MenuItem text="New..." onAction="#showNewItemDialog" />
+						<SeparatorMenuItem />
+						<MenuItem text="Exit" onAction="#handleExit" />
+					</items>
+				</Menu>
+			</MenuBar>
+			<ToolBar>
+				<HBox>
+					<Button onAction="#showNewItemDialog">
+						<tooltip>
+							<Tooltip text="Add a New Todo item." />
+						</tooltip>
+						<graphic>
+							<ImageView>
+								<Image url="@/toolbarButtonGraphics/general/Copy24.gif" />
+							</ImageView>
+						</graphic>
+					</Button>
+					<ToggleButton fx:id="filterToggleButton"
+						text="Today's Items" onAction="#handleFilterButton">
+						<Tooltip
+							text="Button Down: Show Today's items only. Button Up: Show all items." />
+					</ToggleButton>
+				</HBox>
+			</ToolBar>
+		</VBox>
 	</top>
 	<left>
-		<ListView fx:id="todoListView">
-
+		<ListView fx:id="todoListView"
+			onKeyPressed="#handleKeyPressed">
 		</ListView>
 	</left>
 	<center>
 		<VBox style="-fx-background-color: white">
-			<TextArea fx:id="itemDetailsTextArea" VBox.vgrow="ALWAYS" wrapText="true"/>
+			<TextArea fx:id="itemDetailsTextArea" VBox.vgrow="ALWAYS"
+				wrapText="true" />
 			<HBox>
 				<Label text="Due: " style="-fx-background-color: white">
 					<font>

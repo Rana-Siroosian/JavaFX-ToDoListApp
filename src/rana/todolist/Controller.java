@@ -8,11 +8,16 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Predicate;
 
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -28,6 +33,9 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.util.Callback;
@@ -48,6 +56,13 @@ public class Controller {
 	private BorderPane mainBorderPane;
 	@FXML
 	private ContextMenu listContextMenu;
+	@FXML
+	private ToggleButton filterToggleButton;
+
+	private FilteredList<ToDoItems> filteredList;
+
+	private Predicate<ToDoItems> wantAllItems;
+	private Predicate<ToDoItems> wantTodaysItems;
 
 	public void initialize() {
 //		ToDoItems item1 = new ToDoItems("Mail birthday card", "Buy 45th birthday card for Lucy",
@@ -97,8 +112,34 @@ public class Controller {
 			}
 
 		});
+		wantAllItems = new Predicate<ToDoItems>() {
+
+			@Override
+			public boolean test(ToDoItems todoItem) {
+				return true;
+			}
+
+		};
+		wantTodaysItems = new Predicate<ToDoItems>() {
+
+			@Override
+			public boolean test(ToDoItems todoItem) {
+				return (todoItem.getDeadline().equals(LocalDate.now()));
+			}
+
+		};
+		filteredList = new FilteredList<ToDoItems>(TodoData.getInstance().getTodoItems(), wantAllItems);
+
+		SortedList<ToDoItems> sortedList = new SortedList<ToDoItems>(filteredList, new Comparator<ToDoItems>() {
+			@Override
+			public int compare(ToDoItems o1, ToDoItems o2) {
+				return o1.getDeadline().compareTo(o2.getDeadline());
+			}
+
+		});
 //		todoListView.getItems().setAll(TodoData.getInstance().getTodoItems());
-		todoListView.setItems(TodoData.getInstance().getTodoItems());
+//		todoListView.setItems(TodoData.getInstance().getTodoItems());
+		todoListView.setItems(sortedList);
 		todoListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 		todoListView.getSelectionModel().selectFirst();
 
@@ -140,7 +181,7 @@ public class Controller {
 	}
 
 	@FXML
-	public void showNewItemdialog() {
+	public void showNewItemDialog() {
 		Dialog<ButtonType> dialog = new Dialog<>();
 		dialog.initOwner(mainBorderPane.getScene().getWindow());
 		dialog.setTitle("Add New Todo Item");
@@ -171,6 +212,16 @@ public class Controller {
 	}
 
 	@FXML
+	public void handleKeyPressed(KeyEvent keyEvent) {
+		ToDoItems selectedItem = todoListView.getSelectionModel().getSelectedItem();
+		if (selectedItem != null) {
+			if (keyEvent.getCode().equals(KeyCode.DELETE)) {
+				deleteItem(selectedItem);
+			}
+		}
+	}
+
+	@FXML
 	public void handleClickListView() {
 		ToDoItems item = (ToDoItems) todoListView.getSelectionModel().getSelectedItem();
 		itemDetailsTextArea.setText(item.getDetails());
@@ -194,6 +245,31 @@ public class Controller {
 		if (result.isPresent() && result.get() == ButtonType.OK) {
 			TodoData.getInstance().deleteTodoItem(item);
 		}
+	}
+
+	@FXML
+	public void handleFilterButton() {
+		ToDoItems selectedItem = todoListView.getSelectionModel().getSelectedItem();
+		if (filterToggleButton.isSelected()) {
+			filteredList.setPredicate(wantTodaysItems);
+			if (filteredList.isEmpty()) {
+				itemDetailsTextArea.clear();
+				deadlineLabel.setText("");
+
+			} else if (filteredList.contains(selectedItem)) {
+				todoListView.getSelectionModel().select(selectedItem);
+			} else {
+				todoListView.getSelectionModel().selectFirst();
+			}
+		} else {
+			filteredList.setPredicate(wantAllItems);
+			todoListView.getSelectionModel().select(selectedItem);
+		}
+	}
+
+	@FXML
+	public void handleExit() {
+		Platform.exit();
 	}
 
 }
